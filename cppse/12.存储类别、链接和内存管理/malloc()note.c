@@ -3,4 +3,6 @@
 //用法举例：
 #include<stdlib.h>
 double* ptd;
-ptd = (double *) malloc(30 *sizeof(double))
+ptd = (double*) malloc(30 * sizeof(double));
+double item[n];//c99前不可
+ptd = (double*)malloc(n * sizeof(double));
