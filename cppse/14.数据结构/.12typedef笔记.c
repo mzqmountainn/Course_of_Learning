@@ -5,3 +5,8 @@ typedef与define有三处不同
 typedef unsigned char BYTE;
 //随后，可用BYTE表示
 BYTE x, y[10], * z;
+//还可以把typedef用于结构
+typedef struct complex {
+	float real;
+	float imag;
+};
