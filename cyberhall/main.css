@@ -12,10 +12,9 @@ div#main{
     filter: alpha(opacity=30);
     -ms-filter: "alpha(opacity=30)";
     opacity: .3;
-    z-index: 10000;
     
 }
-div#content{
+div#mainContent{
     border-style: ridge;
     border-width: 30px;
     border-color: bisque;
@@ -25,10 +24,19 @@ div#content{
     top: 40%;
     left: 50%;
     width: 666px;
-    height:400px;
+    height:500px;
     margin-left: -333px;
     margin-top: -200px;
-    z-index: 10001;
     box-shadow: 2px 2px 4px #A0A0A0, -2px -2px 4px #A0A0A0;
     background-color: #fff;
+}
+h1,.center{
+    text-align: center;
+
+}
+#avatar{
+    text-align: left;
+    width: 140px;
+    margin: -30px 0 0 19px ;
+    filter: drop-shadow();
 }
