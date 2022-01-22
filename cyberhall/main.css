@@ -1,5 +1,5 @@
 body{
-    background-color: rgba(255, 192, 203,80%);
+    background-color: pink;
 }
 div#main{
     display: block flex;
@@ -11,7 +11,7 @@ div#main{
     background: pink;
     filter: alpha(opacity=30);
     -ms-filter: "alpha(opacity=30)";
-    opacity: .3;
+    /*opacity: .3; 这玩意搞得更滤镜差不多，暂时用不着先注释*/
     
 }
 div#mainContent{
@@ -34,9 +34,9 @@ h1,.center{
     text-align: center;
 
 }
-#avatar{
+.avatar{
     text-align: left;
     width: 140px;
     margin: -30px 0 0 19px ;
-    filter: drop-shadow();
+
 }
