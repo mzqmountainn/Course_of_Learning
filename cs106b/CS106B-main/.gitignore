@@ -1,0 +1,48 @@
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# Qt
+*.pro.user
+*.pro.user.*
+*Debug/
+
+# cmake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts
+Testing
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Makefile
+Makefile
+
+# visual sdudio
+**/.vscode
+
+.DS_Store
+spl.jar
+
+BlankProject/
+CS106/
+hello/
+StanfordCPPLib/
+hello_Qt/
+
+assignments/**/lib
+assignments/**/output
+
+
