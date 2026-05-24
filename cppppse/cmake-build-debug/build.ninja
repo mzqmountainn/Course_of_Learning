@@ -55,17 +55,11 @@ build CMakeFiles/cppppse.dir/main.cpp.obj: CXX_COMPILER__cppppse_unscanned_Debug
   OBJECT_DIR = CMakeFiles\cppppse.dir
   OBJECT_FILE_DIR = CMakeFiles\cppppse.dir
 
-build CMakeFiles/cppppse.dir/src/ch8/1.cpp.obj: CXX_COMPILER__cppppse_unscanned_Debug D$:/workplace/Course_of_Learning/cppppse/src/ch8/1.cpp || cmake_object_order_depends_target_cppppse
-  DEP_FILE = CMakeFiles\cppppse.dir\src\ch8\1.cpp.obj.d
+build CMakeFiles/cppppse.dir/src/ch15/异常.cpp.obj: CXX_COMPILER__cppppse_unscanned_Debug D$:/workplace/Course_of_Learning/cppppse/src/ch15/异常.cpp || cmake_object_order_depends_target_cppppse
+  DEP_FILE = CMakeFiles\cppppse.dir\src\ch15\异常.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\cppppse.dir
-  OBJECT_FILE_DIR = CMakeFiles\cppppse.dir\src\ch8
-
-build CMakeFiles/cppppse.dir/src/ch8/homework1.cpp.obj: CXX_COMPILER__cppppse_unscanned_Debug D$:/workplace/Course_of_Learning/cppppse/src/ch8/homework1.cpp || cmake_object_order_depends_target_cppppse
-  DEP_FILE = CMakeFiles\cppppse.dir\src\ch8\homework1.cpp.obj.d
-  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\cppppse.dir
-  OBJECT_FILE_DIR = CMakeFiles\cppppse.dir\src\ch8
+  OBJECT_FILE_DIR = CMakeFiles\cppppse.dir\src\ch15
 
 
 # =============================================================================
@@ -75,7 +69,7 @@ build CMakeFiles/cppppse.dir/src/ch8/homework1.cpp.obj: CXX_COMPILER__cppppse_un
 #############################################
 # Link the executable cppppse.exe
 
-build cppppse.exe: CXX_EXECUTABLE_LINKER__cppppse_Debug CMakeFiles/cppppse.dir/main.cpp.obj CMakeFiles/cppppse.dir/src/ch8/1.cpp.obj CMakeFiles/cppppse.dir/src/ch8/homework1.cpp.obj
+build cppppse.exe: CXX_EXECUTABLE_LINKER__cppppse_Debug CMakeFiles/cppppse.dir/main.cpp.obj CMakeFiles/cppppse.dir/src/ch15/异常.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\cppppse.dir

@@ -1,0 +1,13 @@
+﻿  37_倒排索引.cpp
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(88,16): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(96,11): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(181,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(200,18): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(209,13): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(294,1): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(270,3): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(271,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(284,6): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(285,6): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\cpp code\C++全套数据结构算法代码\37_倒排索引\37_倒排索引.cpp(286,6): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  37_倒排索引.vcxproj -> D:\cpp code\C++全套数据结构算法代码\x64\Debug\37_倒排索引.exe

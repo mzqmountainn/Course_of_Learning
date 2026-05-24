@@ -23,6 +23,23 @@ template <> void swap<data>(data &a,data &b){ //显式具体化
 }
 template void swap<int>(int &a,int &b);//显式实例化
 
+class test{
+private:
+    int a;
+    char *b;
+public:
+    void show();
+    test();
+    ~test();
+    test(int a_,char*b_);
+};
+
+test::test() {;}
+test::test(int a_, char *b_) {
+    a= a_;
+    b = b_;
+}
+
 int main()
 {
     int a = 10, b = 20;

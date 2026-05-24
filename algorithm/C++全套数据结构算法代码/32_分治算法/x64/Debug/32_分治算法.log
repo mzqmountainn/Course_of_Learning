@@ -1,0 +1,16 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: 中间目录(x64\Debug\)包含从另一个项目(31_分治算法.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  k个有序链表合并.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\k个有序链表合并.cpp(89,50): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  中位数.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\中位数.cpp(95,66): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  二分搜索.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\二分搜索.cpp(38,55): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  归并排序.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\归并排序.cpp(60,34): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  快排划分函数求topk问题.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\快排划分函数求topk问题.cpp(63,53): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\快排划分函数求topk问题.cpp(72,49): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  快速排序.cpp
+D:\cpp code\C++全套数据结构算法代码\32_分治算法\快速排序.cpp(48,34): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  正在生成代码...
+  32_分治算法.vcxproj -> D:\cpp code\C++全套数据结构算法代码\x64\Debug\32_分治算法.exe

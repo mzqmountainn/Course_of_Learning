@@ -1,0 +1,4 @@
+﻿  26_串操作.cpp
+D:\cpp code\C++全套数据结构算法代码\26_串操作\26_串操作.cpp(87,22): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\cpp code\C++全套数据结构算法代码\26_串操作\26_串操作.cpp(88,22): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  26_串操作.vcxproj -> D:\cpp code\C++全套数据结构算法代码\x64\Debug\26_串操作.exe
