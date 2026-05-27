@@ -1,3 +1,3 @@
-D:/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/self.dir
-D:/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/mzq/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/self.dir
+/Users/mzq/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/mzq/workplace/Course_of_Learning/self/cmake-build-debug/CMakeFiles/rebuild_cache.dir

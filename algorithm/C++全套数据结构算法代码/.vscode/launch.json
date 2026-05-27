@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/mzq/workplace/Course_of_Learning/algorithm/C++全套数据结构算法代码/21_大数据查重-位图",
+      "program": "/Users/mzq/workplace/Course_of_Learning/algorithm/C++全套数据结构算法代码/21_大数据查重-位图/build/Debug/outDebug"
+    }
+  ]
+}

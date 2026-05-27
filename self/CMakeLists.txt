@@ -25,5 +25,8 @@ add_executable(self #双指针实现字符串反向.cpp
         #sort/堆排序.cpp
         #hash/线性探测哈希表.cpp
         #hash/链式哈希表.cpp
-        bigData/哈希表大数据处理.cpp
+        #bigData/哈希表大数据处理.cpp
+        #bigData/哈希表大数据处理_位图.cpp
+        bigData/布隆过滤器.cpp
+        bigData/stringHash.h
 )
