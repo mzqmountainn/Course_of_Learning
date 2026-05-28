@@ -1,0 +1,50 @@
+# =========================
+# C++ 编译产物
+# =========================
+*.o
+*.obj
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+*.app
+*.ilk
+*.pdb
+*.exp
+*.lib
+*.a
+
+# =========================
+# CMake 缓存与生成文件
+# =========================
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# =========================
+# CLion (JetBrains) 配置文件
+# =========================
+# 忽略整个 .idea 文件夹（包含本地用户配置、历史记录等）
+.idea/
+# 忽略 CLion 默认生成的构建目录
+cmake-build-*/
+
+# =========================
+# 操作系统生成文件
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
