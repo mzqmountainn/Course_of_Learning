@@ -29,5 +29,6 @@ add_executable(self #双指针实现字符串反向.cpp
         #bigData/哈希表大数据处理_位图.cpp
         #bigData/布隆过滤器.cpp
         #bigData/stringHash.h
-        bigData/大小亘堆解决topK问题.cpp
+        #bigData/大小亘堆解决topK问题.cpp
+        bigData/快排分割解决topK问题.cpp
 )
