@@ -30,8 +30,12 @@ add_executable(self #双指针实现字符串反向.cpp
         #bigData/布隆过滤器.cpp
         #bigData/stringHash.h
         #bigData/大小亘堆解决topK问题.cpp
+<<<<<<< HEAD
         hash/一致性哈希算法.cpp
         hash/md5.cc
         hash/md5.h
 
+=======
+        bigData/快排分割解决topK问题.cpp
+>>>>>>> 1c99a3e49fb820fe71ad128b94cfb4b6d50cd4c4
 )
