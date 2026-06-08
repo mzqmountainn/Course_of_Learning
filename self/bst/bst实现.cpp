@@ -91,6 +91,14 @@ public:
     int number(void) {
         return number(root_);
     }
+    //递归实现插入元素
+    void insert(const T &val) {
+        root_ = insert(root_, val);
+    }
+    //递归查询元素
+    bool query(const T &val) {
+        return nullptr != query(root_, val);
+    }
 
 private:
     //递归实现 此处本质为深度优先搜索
@@ -102,6 +110,8 @@ private:
     //递归实现返回树的深度
     int number(Node *node);
     void levelOrder(Node *node, int level);
+    Node *insert(Node *node, const T &val);
+    Node *query(Node *node, const T &val);
 };
 
 /*
@@ -262,6 +272,39 @@ void BSTree<T, Comp>::levelOrder(Node *node, int level) {
     levelOrder(node->rightChild, level - 1);
     return;
 }
+//递归实现插入元素
+template<typename T, typename Comp>
+BSTree<T, Comp>::Node *BSTree<T, Comp>::insert(Node *node, const T &val) {
+    //当node为空时，说明找到了要插入的位置
+    if (node == nullptr) {
+        return new Node(val);
+    }
+    //当值重复时 不插入
+    if (node->data_ == val) {
+        return node;
+    }
+    if (comp_(node->data_, val)) {
+        //对子节点进行写入
+        node->rightChild = insert(node->rightChild, val);
+    } else {
+        node->leftChild = insert(node->leftChild, val);
+    }
+    return node;
+}
+template<typename T, typename Comp>
+BSTree<T, Comp>::Node *BSTree<T, Comp>::query(Node *node, const T &val) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+    if (node->data_ == val) {
+        return node;
+    }
+    if (comp_(node->data_, val)) {
+        return query(node->rightChild, val);
+    } else {
+        return query(node->leftChild, val);
+    }
+}
 int main(void) {
     BSTree<int> test1;
     int arr[] = {5, 4, 6, 2, 6, 7, 4, 99};
@@ -278,12 +321,15 @@ int main(void) {
     BSTree<int> test2;
     int arrr[] = {58, 24, 0, 5, 34, 41, 67, 62, 64, 69, 78};
     for (auto i: arrr) {
-        test2.n_insert(i);
+        //test2.n_insert(i);
+        test2.insert(i);
     }
     test2.preOrder();
     test2.inOrder();
     test2.postOrder();
     test2.levelOrder();
+    cout << test2.query(6);
+    cout << test2.query(69);
 
     return 0;
 }
