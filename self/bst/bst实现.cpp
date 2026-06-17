@@ -86,6 +86,33 @@ public:
         cout << endl;
     };
 
+    void n_preOrder(void)
+    {
+        stack<Node*> nodeStack;
+        cout << "前序遍历（非递归）";
+        if (root_ == nullptr)
+        {
+            return;
+        }
+        nodeStack.push(root_);
+        while (!nodeStack.empty())
+        {
+            Node* now = nodeStack.top();
+            nodeStack.pop();
+            cout << now->data_ << " ";
+            //先入栈右孩子再入栈左孩子
+            if (now->rightChild != nullptr)
+            {
+                nodeStack.push(now->rightChild);
+            }
+            if (now->leftChild != nullptr)
+            {
+                nodeStack.push(now->leftChild);
+            }
+        }
+        cout << endl;
+    }
+
     void inOrder()
     {
         cout << "中序遍历:";
@@ -93,12 +120,82 @@ public:
         cout << endl;
     };
 
+    /*非递归实现中序遍历
+     *思路：先将左边的节点全部入栈，然后出栈后输出元素，然后将右节点入栈
+     *如果右节点有左子节点 重复入栈操作
+     */
+    void n_inOrder(void)
+    {
+        if (root_ == nullptr)
+        {
+            return;
+        }
+        Node* cur = root_;
+        stack<Node*> nodeStack;
+        cout << "中序遍历（非递归） ";
+        //nodeStack.push(cur);
+        while (cur != nullptr || !nodeStack.empty())
+        {
+            if (cur != nullptr)
+            {
+                nodeStack.push(cur);
+                cur = cur->leftChild;
+            }
+            else
+            {
+                Node* now = nodeStack.top();
+                nodeStack.pop();
+                cout << now->data_ << " ";
+                cur = now->rightChild;
+            }
+        }
+        cout << endl;
+    }
+
     void postOrder()
     {
         cout << "后序遍历:";
         postOrder(root_);
         cout << endl;
     };
+    /*
+     *非递归后序遍历
+     *思路：后续遍历为LRV 倒过来为VRL 与前序遍历VLR相似 只需要调整左右孩子入栈顺序即可
+     *需要使用第二个栈 来使最后的结果反向输出
+     */
+    void n_postOrder(void)
+    {
+        if (root_ == nullptr)
+        {
+            return;
+        }
+        stack<Node*> s1;
+        stack<Node*> s2;
+        s1.push(root_);
+        cout << "后序遍历（非递归） ";
+        while (!s1.empty())
+        {
+            Node* now = s1.top();
+            s1.pop();
+            s2.push(now);
+            if (now->leftChild != nullptr)
+            {
+                s1.push(now->leftChild);
+            }
+            if (now->rightChild != nullptr)
+            {
+                s1.push(now->rightChild);
+            }
+        }
+        while (!s2.empty())
+        {
+            Node* now = s2.top();
+            s2.pop();
+            cout << now->data_ << " ";
+        }
+        cout << endl;
+    }
+
     //递归实现层级遍历
     void levelOrder(void);
     //递归返回树的高度
@@ -473,8 +570,11 @@ int main(void)
     }
     test2.remove(0);
     test2.preOrder();
+    test2.n_preOrder();
     test2.inOrder();
+    test2.n_inOrder();
     test2.postOrder();
+    test2.n_postOrder();
     test2.levelOrder();
     cout << test2.query(6);
     cout << test2.query(69);
