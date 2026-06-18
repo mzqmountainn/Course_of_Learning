@@ -10,6 +10,10 @@
 #include <cmath>
 #include <string>
 
+/*  层序遍历和深度遍历 使用栈
+ *  广度遍历 使用队列
+ */
+
 using namespace std;
 
 template <typename T, typename Comp = less<T>>
@@ -198,6 +202,35 @@ public:
 
     //递归实现层级遍历
     void levelOrder(void);
+
+    //非递归实现层级遍历
+    void n_levelOrder(void)
+    {
+        if (root_ == nullptr)
+        {
+            return;
+        }
+        queue<Node*> queForleverOrder;
+        queForleverOrder.push(root_);
+        cout << "层序遍历（非递归）";
+        while (!queForleverOrder.empty())
+        {
+            Node* now = queForleverOrder.front();
+            queForleverOrder.pop();
+            cout << now->data_ << " ";
+            //输出自己之后 将左右孩子入队头
+            if (now->leftChild != nullptr)
+            {
+                queForleverOrder.push(now->leftChild);
+            }
+            if (now->rightChild != nullptr)
+            {
+                queForleverOrder.push(now->rightChild);
+            }
+        }
+        cout << endl;
+    }
+
     //递归返回树的高度
     int high(void)
     {
@@ -227,7 +260,8 @@ public:
         root_ = remove(root_, val);
     }
 
-private:
+private
+:
     //递归实现 此处本质为深度优先搜索
     void preOrder(Node* node);
     void inOrder(Node* node);
@@ -576,6 +610,7 @@ int main(void)
     test2.postOrder();
     test2.n_postOrder();
     test2.levelOrder();
+    test2.n_levelOrder();
     cout << test2.query(6);
     cout << test2.query(69);
 
