@@ -35,6 +35,31 @@ private:
 
 public:
     BSTree(Comp c = Comp()) : root_(nullptr), comp_(c) { ; }
+    //通过层级遍历进行析构
+    ~BSTree()
+    {
+        queue<Node*> queueForClear;
+        if (root_ == nullptr)
+        {
+            return;
+        }
+        queueForClear.push(root_);
+        while (!queueForClear.empty())
+        {
+            Node* now = queueForClear.front();
+            queueForClear.pop();
+            if (now->leftChild != nullptr)
+            {
+                queueForClear.push(now->leftChild);
+            }
+            if (now->rightChild != nullptr)
+            {
+                queueForClear.push(now->rightChild);
+            }
+            delete now;
+        }
+    }
+
     //非递归插入
     void n_insert(T const& val)
     {
