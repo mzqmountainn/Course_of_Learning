@@ -10,138 +10,169 @@
 #include <cmath>
 #include <string>
 
-/*  ²ãĞò±éÀúºÍÉî¶È±éÀú Ê¹ÓÃÕ»
- *  ¹ã¶È±éÀú Ê¹ÓÃ¶ÓÁĞ
+/*  å±‚åºéå†å’Œæ·±åº¦éå† ä½¿ç”¨æ ˆ
+ *  å¹¿åº¦éå† ä½¿ç”¨é˜Ÿåˆ—
  */
 
 using namespace std;
 
-template<typename T, typename Comp = less<T> >
+template <typename T, typename Comp = less<T>>
 
-class BSTree {
+class BSTree
+{
 private:
-    struct Node {
+    struct Node
+    {
         T data_;
-        Node *leftChild;
-        Node *rightChild;
-        Node *root;
+        Node* leftChild;
+        Node* rightChild;
+        Node* root;
         Node(T data = T()) : data_(data), leftChild(nullptr), rightChild(nullptr) { ; }
     };
 
-    Node *root_;
+    Node* root_;
     Comp comp_;
 
 public:
     BSTree(Comp c = Comp()) : root_(nullptr), comp_(c) { ; }
-    //Í¨¹ı²ã¼¶±éÀú½øĞĞÎö¹¹
-    ~BSTree() {
-        queue<Node *> queueForClear;
-        if (root_ == nullptr) {
+    //é€šè¿‡å±‚çº§éå†è¿›è¡Œææ„
+    ~BSTree()
+    {
+        queue<Node*> queueForClear;
+        if (root_ == nullptr)
+        {
             return;
         }
         queueForClear.push(root_);
-        while (!queueForClear.empty()) {
-            Node *now = queueForClear.front();
+        while (!queueForClear.empty())
+        {
+            Node* now = queueForClear.front();
             queueForClear.pop();
-            if (now->leftChild != nullptr) {
+            if (now->leftChild != nullptr)
+            {
                 queueForClear.push(now->leftChild);
             }
-            if (now->rightChild != nullptr) {
+            if (now->rightChild != nullptr)
+            {
                 queueForClear.push(now->rightChild);
             }
             delete now;
         }
     }
 
-    //·Çµİ¹é²åÈë
-    void n_insert(T const &val) {
-        if (root_ == nullptr) {
+    //éé€’å½’æ’å…¥
+    void n_insert(T const& val)
+    {
+        if (root_ == nullptr)
+        {
             root_ = new Node(val);
             return;
         }
-        Node *cur = root_;
-        Node *parent = nullptr;
-        while (cur != nullptr) {
-            //¾ö¶¨ÊÇ·ñĞèÒª½øÈë×óº¢×Ó
-            if (comp_(val, cur->data_)) {
+        Node* cur = root_;
+        Node* parent = nullptr;
+        while (cur != nullptr)
+        {
+            //å†³å®šæ˜¯å¦éœ€è¦è¿›å…¥å·¦å­©å­
+            if (comp_(val, cur->data_))
+            {
                 parent = cur;
                 cur = cur->leftChild;
-            } else if (val == cur->data_) {
+            }
+            else if (val == cur->data_)
+            {
                 return;
-            } else if (!comp_(val, cur->data_)) {
+            }
+            else if (!comp_(val, cur->data_))
+            {
                 parent = cur;
                 cur = cur->rightChild;
-            } //ÅĞ¶ÏÊÇ·ñÖØ¸´
+            } //åˆ¤æ–­æ˜¯å¦é‡å¤
         }
         cur = new Node(val);
-        //ÅĞ¶Ï²åÈë×óº¢×Ó»¹ÊÇÓÒº¢×Ó
-        if (comp_(val, parent->data_)) {
+        //åˆ¤æ–­æ’å…¥å·¦å­©å­è¿˜æ˜¯å³å­©å­
+        if (comp_(val, parent->data_))
+        {
             parent->leftChild = cur;
-        } else {
+        }
+        else
+        {
             parent->rightChild = cur;
         }
         cur = nullptr;
         return;
     }
 
-    void n_remove(T const &val);
-    bool n_query(T const &val);
-    /*bstÊ÷µÄÇ°Ğò¡¢ÖĞĞò¡¢ºóĞø±éÀú
-     *V µ±Ç°½Úµã L×ó×Ó½Úµã RÓÒ×Ó½Úµã
+    void n_remove(T const& val);
+    bool n_query(T const& val);
+    /*bstæ ‘çš„å‰åºã€ä¸­åºã€åç»­éå†
+     *V å½“å‰èŠ‚ç‚¹ Lå·¦å­èŠ‚ç‚¹ Rå³å­èŠ‚ç‚¹
      *VLR LVR LRV
      */
-    void preOrder() {
-        cout << "Ç°Ğò±éÀú:";
+    void preOrder()
+    {
+        cout << "å‰åºéå†:";
         preOrder(root_);
         cout << endl;
     };
 
-    void n_preOrder(void) {
-        stack<Node *> nodeStack;
-        cout << "Ç°Ğò±éÀú£¨·Çµİ¹é£©";
-        if (root_ == nullptr) {
+    void n_preOrder(void)
+    {
+        stack<Node*> nodeStack;
+        cout << "å‰åºéå†ï¼ˆéé€’å½’ï¼‰";
+        if (root_ == nullptr)
+        {
             return;
         }
         nodeStack.push(root_);
-        while (!nodeStack.empty()) {
-            Node *now = nodeStack.top();
+        while (!nodeStack.empty())
+        {
+            Node* now = nodeStack.top();
             nodeStack.pop();
             cout << now->data_ << " ";
-            //ÏÈÈëÕ»ÓÒº¢×ÓÔÙÈëÕ»×óº¢×Ó
-            if (now->rightChild != nullptr) {
+            //å…ˆå…¥æ ˆå³å­©å­å†å…¥æ ˆå·¦å­©å­
+            if (now->rightChild != nullptr)
+            {
                 nodeStack.push(now->rightChild);
             }
-            if (now->leftChild != nullptr) {
+            if (now->leftChild != nullptr)
+            {
                 nodeStack.push(now->leftChild);
             }
         }
         cout << endl;
     }
 
-    void inOrder() {
-        cout << "ÖĞĞò±éÀú:";
+    void inOrder()
+    {
+        cout << "ä¸­åºéå†:";
         inOrder(root_);
         cout << endl;
     };
 
-    /*·Çµİ¹éÊµÏÖÖĞĞò±éÀú
-     *Ë¼Â·£ºÏÈ½«×ó±ßµÄ½ÚµãÈ«²¿ÈëÕ»£¬È»ºó³öÕ»ºóÊä³öÔªËØ£¬È»ºó½«ÓÒ½ÚµãÈëÕ»
-     *Èç¹ûÓÒ½ÚµãÓĞ×ó×Ó½Úµã ÖØ¸´ÈëÕ»²Ù×÷
+    /*éé€’å½’å®ç°ä¸­åºéå†
+     *æ€è·¯ï¼šå…ˆå°†å·¦è¾¹çš„èŠ‚ç‚¹å…¨éƒ¨å…¥æ ˆï¼Œç„¶åå‡ºæ ˆåè¾“å‡ºå…ƒç´ ï¼Œç„¶åå°†å³èŠ‚ç‚¹å…¥æ ˆ
+     *å¦‚æœå³èŠ‚ç‚¹æœ‰å·¦å­èŠ‚ç‚¹ é‡å¤å…¥æ ˆæ“ä½œ
      */
-    void n_inOrder(void) {
-        if (root_ == nullptr) {
+    void n_inOrder(void)
+    {
+        if (root_ == nullptr)
+        {
             return;
         }
-        Node *cur = root_;
-        stack<Node *> nodeStack;
-        cout << "ÖĞĞò±éÀú£¨·Çµİ¹é£© ";
+        Node* cur = root_;
+        stack<Node*> nodeStack;
+        cout << "ä¸­åºéå†ï¼ˆéé€’å½’ï¼‰ ";
         //nodeStack.push(cur);
-        while (cur != nullptr || !nodeStack.empty()) {
-            if (cur != nullptr) {
+        while (cur != nullptr || !nodeStack.empty())
+        {
+            if (cur != nullptr)
+            {
                 nodeStack.push(cur);
                 cur = cur->leftChild;
-            } else {
-                Node *now = nodeStack.top();
+            }
+            else
+            {
+                Node* now = nodeStack.top();
                 nodeStack.pop();
                 cout << now->data_ << " ";
                 cur = now->rightChild;
@@ -150,211 +181,259 @@ public:
         cout << endl;
     }
 
-    void postOrder() {
-        cout << "ºóĞò±éÀú:";
+    void postOrder()
+    {
+        cout << "ååºéå†:";
         postOrder(root_);
         cout << endl;
     };
     /*
-     *·Çµİ¹éºóĞò±éÀú
-     *Ë¼Â·£ººóĞø±éÀúÎªLRV µ¹¹ıÀ´ÎªVRL ÓëÇ°Ğò±éÀúVLRÏàËÆ Ö»ĞèÒªµ÷Õû×óÓÒº¢×ÓÈëÕ»Ë³Ğò¼´¿É
-     *ĞèÒªÊ¹ÓÃµÚ¶ş¸öÕ» À´Ê¹×îºóµÄ½á¹û·´ÏòÊä³ö
+     *éé€’å½’ååºéå†
+     *æ€è·¯ï¼šåç»­éå†ä¸ºLRV å€’è¿‡æ¥ä¸ºVRL ä¸å‰åºéå†VLRç›¸ä¼¼ åªéœ€è¦è°ƒæ•´å·¦å³å­©å­å…¥æ ˆé¡ºåºå³å¯
+     *éœ€è¦ä½¿ç”¨ç¬¬äºŒä¸ªæ ˆ æ¥ä½¿æœ€åçš„ç»“æœåå‘è¾“å‡º
      */
-    void n_postOrder(void) {
-        if (root_ == nullptr) {
+    void n_postOrder(void)
+    {
+        if (root_ == nullptr)
+        {
             return;
         }
-        stack<Node *> s1;
-        stack<Node *> s2;
+        stack<Node*> s1;
+        stack<Node*> s2;
         s1.push(root_);
-        cout << "ºóĞò±éÀú£¨·Çµİ¹é£© ";
-        while (!s1.empty()) {
-            Node *now = s1.top();
+        cout << "ååºéå†ï¼ˆéé€’å½’ï¼‰ ";
+        while (!s1.empty())
+        {
+            Node* now = s1.top();
             s1.pop();
             s2.push(now);
-            if (now->leftChild != nullptr) {
+            if (now->leftChild != nullptr)
+            {
                 s1.push(now->leftChild);
             }
-            if (now->rightChild != nullptr) {
+            if (now->rightChild != nullptr)
+            {
                 s1.push(now->rightChild);
             }
         }
-        while (!s2.empty()) {
-            Node *now = s2.top();
+        while (!s2.empty())
+        {
+            Node* now = s2.top();
             s2.pop();
             cout << now->data_ << " ";
         }
         cout << endl;
     }
 
-    //µİ¹éÊµÏÖ²ã¼¶±éÀú
+    //é€’å½’å®ç°å±‚çº§éå†
     void levelOrder(void);
 
-    //·Çµİ¹éÊµÏÖ²ã¼¶±éÀú
-    void n_levelOrder(void) {
-        if (root_ == nullptr) {
+    //éé€’å½’å®ç°å±‚çº§éå†
+    void n_levelOrder(void)
+    {
+        if (root_ == nullptr)
+        {
             return;
         }
-        queue<Node *> queForleverOrder;
+        queue<Node*> queForleverOrder;
         queForleverOrder.push(root_);
-        cout << "²ãĞò±éÀú£¨·Çµİ¹é£©";
-        while (!queForleverOrder.empty()) {
-            Node *now = queForleverOrder.front();
+        cout << "å±‚åºéå†ï¼ˆéé€’å½’ï¼‰";
+        while (!queForleverOrder.empty())
+        {
+            Node* now = queForleverOrder.front();
             queForleverOrder.pop();
             cout << now->data_ << " ";
-            //Êä³ö×Ô¼ºÖ®ºó ½«×óÓÒº¢×ÓÈë¶ÓÍ·
-            if (now->leftChild != nullptr) {
+            //è¾“å‡ºè‡ªå·±ä¹‹å å°†å·¦å³å­©å­å…¥é˜Ÿå¤´
+            if (now->leftChild != nullptr)
+            {
                 queForleverOrder.push(now->leftChild);
             }
-            if (now->rightChild != nullptr) {
+            if (now->rightChild != nullptr)
+            {
                 queForleverOrder.push(now->rightChild);
             }
         }
         cout << endl;
     }
 
-    //µİ¹é·µ»ØÊ÷µÄ¸ß¶È
-    int high(void) {
+    //é€’å½’è¿”å›æ ‘çš„é«˜åº¦
+    int high(void)
+    {
         return high(root_);
     }
 
-    //µİ¹é·µ»Ø½ÚµãÊıÁ¿
-    int number(void) {
+    //é€’å½’è¿”å›èŠ‚ç‚¹æ•°é‡
+    int number(void)
+    {
         return number(root_);
     }
 
-    //µİ¹éÊµÏÖ²åÈëÔªËØ
-    void insert(const T &val) {
+    //é€’å½’å®ç°æ’å…¥å…ƒç´ 
+    void insert(const T& val)
+    {
         root_ = insert(root_, val);
     }
 
-    //µİ¹é²éÑ¯ÔªËØ
-    bool query(const T &val) {
+    //é€’å½’æŸ¥è¯¢å…ƒç´ 
+    bool query(const T& val)
+    {
         return nullptr != query(root_, val);
     }
 
-    void remove(const T &val) {
+    void remove(const T& val)
+    {
         root_ = remove(root_, val);
     }
 
-    //²éÕÒÇø¼äÄÚµÄÖµ public api
-    void findValues(vector<T> &vec, int left, int right) {
+    //æŸ¥æ‰¾åŒºé—´å†…çš„å€¼ public api
+    void findValues(vector<T>& vec, int left, int right)
+    {
         findValues(root_, vec, left, right);
     }
-    //ÅĞ¶ÏÊÇ·ñÎªbstÊ÷
-    bool isBSTree(void) {
-        Node *pre = nullptr;
+
+    //åˆ¤æ–­æ˜¯å¦ä¸ºbstæ ‘
+    bool isBSTree(void)
+    {
+        Node* pre = nullptr;
         isBSTree(root_, pre);
     }
 
 private
 :
-    //µİ¹éÊµÏÖ ´Ë´¦±¾ÖÊÎªÉî¶ÈÓÅÏÈËÑË÷
-    void preOrder(Node *node);
-    void inOrder(Node *node);
-    void postOrder(Node *node);
-    //µİ¹éÊµÏÖ·µ»ØÊ÷µÄÉî¶È
-    int high(Node *node);
-    //µİ¹éÊµÏÖ·µ»ØÊ÷µÄÉî¶È
-    int number(Node *node);
-    void levelOrder(Node *node, int level);
-    Node *insert(Node *node, const T &val);
-    Node *query(Node *node, const T &val);
-    Node *remove(Node *node, const T &val);
-    //²éÕÒÇø¼äÄÚµÄÖµ
-    void findValues(Node *node, vector<T> &vec, int left, int right);
-    bool isBSTree(Node *node, Node *pre);
+    //é€’å½’å®ç° æ­¤å¤„æœ¬è´¨ä¸ºæ·±åº¦ä¼˜å…ˆæœç´¢
+    void preOrder(Node* node);
+    void inOrder(Node* node);
+    void postOrder(Node* node);
+    //é€’å½’å®ç°è¿”å›æ ‘çš„æ·±åº¦
+    int high(Node* node);
+    //é€’å½’å®ç°è¿”å›æ ‘çš„æ·±åº¦
+    int number(Node* node);
+    void levelOrder(Node* node, int level);
+    Node* insert(Node* node, const T& val);
+    Node* query(Node* node, const T& val);
+    Node* remove(Node* node, const T& val);
+    //æŸ¥æ‰¾åŒºé—´å†…çš„å€¼
+    void findValues(Node* node, vector<T>& vec, int left, int right);
+    bool isBSTree(Node* node, Node* pre);
 };
 
 /*
-BSTÊ÷É¾³ı½Úµã
-1.Ã»ÓĞº¢×ÓµÄ½Úµã¸¸½ÚµãµØÖ·Óònullpt
-2.ÓĞÒ»¸öº¢×Óº¢×ÓĞ´Èë¸¸½ÚµãµØÖ·Óò
-3.É¾³ıµÄ½ÚµãÓĞÁ½¸öº¢×Ó
-ÕÒ´ıÉ¾³ı½ÚµãµÄÇ°Çı½Úµã£¨»òÕßºó¼Ì½Úµã£©£¬ÓÃÇ°Çı»òÕßºó¼Ì½ÚµãµÄÖµ°Ñ´ıÉ¾³ı½ÚµãµÄÖµ¸²¸Ç
-µô£¬È»ºóÖ±½ÓÉ¾³ıÇ°Çı»òÕßºó¼Ì½Úµã¾Í¿ÉÒÔÁË
+BSTæ ‘åˆ é™¤èŠ‚ç‚¹
+1.æ²¡æœ‰å­©å­çš„èŠ‚ç‚¹çˆ¶èŠ‚ç‚¹åœ°å€åŸŸnullpt
+2.æœ‰ä¸€ä¸ªå­©å­å­©å­å†™å…¥çˆ¶èŠ‚ç‚¹åœ°å€åŸŸ
+3.åˆ é™¤çš„èŠ‚ç‚¹æœ‰ä¸¤ä¸ªå­©å­
+æ‰¾å¾…åˆ é™¤èŠ‚ç‚¹çš„å‰é©±èŠ‚ç‚¹ï¼ˆæˆ–è€…åç»§èŠ‚ç‚¹ï¼‰ï¼Œç”¨å‰é©±æˆ–è€…åç»§èŠ‚ç‚¹çš„å€¼æŠŠå¾…åˆ é™¤èŠ‚ç‚¹çš„å€¼è¦†ç›–
+æ‰ï¼Œç„¶åç›´æ¥åˆ é™¤å‰é©±æˆ–è€…åç»§èŠ‚ç‚¹å°±å¯ä»¥äº†
 */
-template<typename T, typename Comp>
-void BSTree<T, Comp>::n_remove(T const &val) {
-    if (root_ == nullptr) {
+template <typename T, typename Comp>
+void BSTree<T, Comp>::n_remove(T const& val)
+{
+    if (root_ == nullptr)
+    {
         return;
     }
-    //Ñ°ÕÒÉ¾³ı½Úµã
-    Node *cur = root_;
-    Node *parent = nullptr;
-    while (cur != nullptr) {
-        if (cur->data_ == val) {
+    //å¯»æ‰¾åˆ é™¤èŠ‚ç‚¹
+    Node* cur = root_;
+    Node* parent = nullptr;
+    while (cur != nullptr)
+    {
+        if (cur->data_ == val)
+        {
             break;
-        } else if (comp_(cur->data_, val)) {
+        }
+        else if (comp_(cur->data_, val))
+        {
             parent = cur;
             cur = cur->rightChild;
-        } else {
+        }
+        else
+        {
             parent = cur;
             cur = cur->leftChild;
         }
     }
-    //Îª¿ÕËµÃ÷ÕÒ²»µ½ÒªÉ¾³ıµÄÔªËØ ½áÊø
+    //ä¸ºç©ºè¯´æ˜æ‰¾ä¸åˆ°è¦åˆ é™¤çš„å…ƒç´  ç»“æŸ
     if (cur == nullptr)
         return;
-    Node *target = cur;
+    Node* target = cur;
 
-    //½ÓÏÂÀ´¿ªÊ¼ÅĞ¶ÏÊÇ·ñÊôÓÚÇé¿ö3£¬ÅĞ¶ÏÊÇ·ñÓĞÁ½¸öº¢×Ó
-    if (cur->leftChild != nullptr && cur->rightChild != nullptr) {
-        //Ñ°ÕÒÇ°Çı½Úµã
+    //æ¥ä¸‹æ¥å¼€å§‹åˆ¤æ–­æ˜¯å¦å±äºæƒ…å†µ3ï¼Œåˆ¤æ–­æ˜¯å¦æœ‰ä¸¤ä¸ªå­©å­
+    if (cur->leftChild != nullptr && cur->rightChild != nullptr)
+    {
+        //å¯»æ‰¾å‰é©±èŠ‚ç‚¹
         parent = cur;
         cur = cur->leftChild;
-        while (cur->rightChild != nullptr) {
+        while (cur->rightChild != nullptr)
+        {
             parent = cur;
             cur = cur->rightChild;
         }
-        //½«Ç°Çı½ÚµãµÄÖµºÍÒªÉ¾³ıµÄÖµ½»»»
+        //å°†å‰é©±èŠ‚ç‚¹çš„å€¼å’Œè¦åˆ é™¤çš„å€¼äº¤æ¢
         target->data_ = cur->data_;
     }
-    //½øÈëÉ¾³ı£¬Ê×ÏÈÅÅ³ıÌØÊâÇé¿ö£ºÒªÉ¾³ıµÄÊÇroot ÇÒroot×óÓÒº¢×ÓÖĞÖ»ÓĞÒ»¸öº¢×Ó»òÕßÃ»ÓĞ
-    if (parent == nullptr && cur == root_) {
-        if (root_->leftChild != nullptr) {
+    //è¿›å…¥åˆ é™¤ï¼Œé¦–å…ˆæ’é™¤ç‰¹æ®Šæƒ…å†µï¼šè¦åˆ é™¤çš„æ˜¯root ä¸”rootå·¦å³å­©å­ä¸­åªæœ‰ä¸€ä¸ªå­©å­æˆ–è€…æ²¡æœ‰
+    if (parent == nullptr && cur == root_)
+    {
+        if (root_->leftChild != nullptr)
+        {
             parent = root_;
             root_ = root_->leftChild;
             delete parent;
             parent = nullptr;
-        } else if ((root_->rightChild != nullptr)) {
+        }
+        else if ((root_->rightChild != nullptr))
+        {
             parent = root_;
             root_ = root_->rightChild;
             delete parent;
             parent = nullptr;
-        } else {
+        }
+        else
+        {
             delete root_;
             root_ = nullptr;
         }
         return;
     }
-    //´¦ÀíÕı³£Çé¿ö
-    if (parent->leftChild == cur) {
+    //å¤„ç†æ­£å¸¸æƒ…å†µ
+    if (parent->leftChild == cur)
+    {
         parent->leftChild = (cur->leftChild == nullptr ? cur->rightChild : cur->leftChild);
-    } else if (parent->rightChild == cur) {
+    }
+    else if (parent->rightChild == cur)
+    {
         parent->rightChild = (cur->leftChild == nullptr ? cur->rightChild : cur->leftChild);
     }
     delete cur;
 }
 
-template<typename T, typename Comp>
-bool BSTree<T, Comp>::n_query(T const &val) {
-    Node *cur = root_;
-    while (cur != nullptr) {
-        if (cur->data_ == val) {
+template <typename T, typename Comp>
+bool BSTree<T, Comp>::n_query(T const& val)
+{
+    Node* cur = root_;
+    while (cur != nullptr)
+    {
+        if (cur->data_ == val)
+        {
             return true;
-        } else if (comp_(cur->data_, val)) {
+        }
+        else if (comp_(cur->data_, val))
+        {
             cur = cur->rightChild;
-        } else {
+        }
+        else
+        {
             cur = cur->leftChild;
         }
     }
     return false;
 }
 
-template<typename T, typename Comp>
-void BSTree<T, Comp>::preOrder(Node *node) {
-    if (node != nullptr) {
+template <typename T, typename Comp>
+void BSTree<T, Comp>::preOrder(Node* node)
+{
+    if (node != nullptr)
+    {
         cout << node->data_ << " ";
         preOrder(node->leftChild);
         preOrder(node->rightChild);
@@ -362,9 +441,11 @@ void BSTree<T, Comp>::preOrder(Node *node) {
     return;
 }
 
-template<typename T, typename Comp>
-void BSTree<T, Comp>::inOrder(Node *node) {
-    if (node != nullptr) {
+template <typename T, typename Comp>
+void BSTree<T, Comp>::inOrder(Node* node)
+{
+    if (node != nullptr)
+    {
         inOrder(node->leftChild);
         cout << node->data_ << " ";
         inOrder(node->rightChild);
@@ -372,9 +453,11 @@ void BSTree<T, Comp>::inOrder(Node *node) {
     return;
 }
 
-template<typename T, typename Comp>
-void BSTree<T, Comp>::postOrder(Node *node) {
-    if (node != nullptr) {
+template <typename T, typename Comp>
+void BSTree<T, Comp>::postOrder(Node* node)
+{
+    if (node != nullptr)
+    {
         postOrder(node->leftChild);
         postOrder(node->rightChild);
         cout << node->data_ << " ";
@@ -382,10 +465,12 @@ void BSTree<T, Comp>::postOrder(Node *node) {
     return;
 }
 
-//µİ¹éÊµÏÖ·µ»ØÊ÷µÄÉî¶È
-template<typename T, typename Comp>
-int BSTree<T, Comp>::high(Node *node) {
-    if (node == nullptr) {
+//é€’å½’å®ç°è¿”å›æ ‘çš„æ·±åº¦
+template <typename T, typename Comp>
+int BSTree<T, Comp>::high(Node* node)
+{
+    if (node == nullptr)
+    {
         return 0;
     }
     int left = high(node->leftChild);
@@ -393,10 +478,12 @@ int BSTree<T, Comp>::high(Node *node) {
     return (left >= right) ? left + 1 : right + 1;
 }
 
-//µİ¹é·µ»Ø½Úµã¸öÊı
-template<typename T, typename Comp>
-int BSTree<T, Comp>::number(Node *node) {
-    if (node == nullptr) {
+//é€’å½’è¿”å›èŠ‚ç‚¹ä¸ªæ•°
+template <typename T, typename Comp>
+int BSTree<T, Comp>::number(Node* node)
+{
+    if (node == nullptr)
+    {
         return 0;
     }
     int left = number(node->leftChild);
@@ -404,25 +491,29 @@ int BSTree<T, Comp>::number(Node *node) {
     return left + right + 1;
 }
 
-//µİ¹é½øĞĞ²ã¼¶±éÀú
-template<typename T, typename Comp>
-void BSTree<T, Comp>::levelOrder(void) {
+//é€’å½’è¿›è¡Œå±‚çº§éå†
+template <typename T, typename Comp>
+void BSTree<T, Comp>::levelOrder(void)
+{
     int depth = high();
-    cout << "²ã¼¶±éÀú:";
-    for (int i = 0; i < depth; ++i) {
+    cout << "å±‚çº§éå†:";
+    for (int i = 0; i < depth; ++i)
+    {
         levelOrder(root_, i);
     }
     cout << endl;
     return;
 }
 
-//µİ¹é½øĞĞ²ã¼¶±éÀú
-template<typename T, typename Comp>
-void BSTree<T, Comp>::levelOrder(Node *node, int level) {
+//é€’å½’è¿›è¡Œå±‚çº§éå†
+template <typename T, typename Comp>
+void BSTree<T, Comp>::levelOrder(Node* node, int level)
+{
     if (node == nullptr)
         return;
-    //µ±µ½´ïÕâÒ»²ãÊ± ²ÅÊä³ö ÕâÑù±£Ö¤ÁËÖ»ÔÚµÚn²ãÊä³öµÚn²ãµÄ½ÚµãÄÚÈİ
-    if (level == 0) {
+    //å½“åˆ°è¾¾è¿™ä¸€å±‚æ—¶ æ‰è¾“å‡º è¿™æ ·ä¿è¯äº†åªåœ¨ç¬¬nå±‚è¾“å‡ºç¬¬nå±‚çš„èŠ‚ç‚¹å†…å®¹
+    if (level == 0)
+    {
         cout << node->data_ << " ";
     }
     levelOrder(node->leftChild, level - 1);
@@ -430,111 +521,148 @@ void BSTree<T, Comp>::levelOrder(Node *node, int level) {
     return;
 }
 
-//µİ¹éÊµÏÖ²åÈëÔªËØ
-template<typename T, typename Comp>
-BSTree<T, Comp>::Node *BSTree<T, Comp>::insert(Node *node, const T &val) {
-    //µ±nodeÎª¿ÕÊ±£¬ËµÃ÷ÕÒµ½ÁËÒª²åÈëµÄÎ»ÖÃ
-    if (node == nullptr) {
+//é€’å½’å®ç°æ’å…¥å…ƒç´ 
+template <typename T, typename Comp>
+BSTree<T, Comp>::Node* BSTree<T, Comp>::insert(Node* node, const T& val)
+{
+    //å½“nodeä¸ºç©ºæ—¶ï¼Œè¯´æ˜æ‰¾åˆ°äº†è¦æ’å…¥çš„ä½ç½®
+    if (node == nullptr)
+    {
         return new Node(val);
     }
-    //µ±ÖµÖØ¸´Ê± ²»²åÈë
-    if (node->data_ == val) {
+    //å½“å€¼é‡å¤æ—¶ ä¸æ’å…¥
+    if (node->data_ == val)
+    {
         return node;
     }
-    if (comp_(node->data_, val)) {
-        //¶Ô×Ó½Úµã½øĞĞĞ´Èë
+    if (comp_(node->data_, val))
+    {
+        //å¯¹å­èŠ‚ç‚¹è¿›è¡Œå†™å…¥
         node->rightChild = insert(node->rightChild, val);
-    } else {
+    }
+    else
+    {
         node->leftChild = insert(node->leftChild, val);
     }
     return node;
 }
 
-template<typename T, typename Comp>
-BSTree<T, Comp>::Node *BSTree<T, Comp>::query(Node *node, const T &val) {
-    if (node == nullptr) {
+template <typename T, typename Comp>
+BSTree<T, Comp>::Node* BSTree<T, Comp>::query(Node* node, const T& val)
+{
+    if (node == nullptr)
+    {
         return nullptr;
     }
-    if (node->data_ == val) {
+    if (node->data_ == val)
+    {
         return node;
     }
-    if (comp_(node->data_, val)) {
+    if (comp_(node->data_, val))
+    {
         return query(node->rightChild, val);
-    } else {
+    }
+    else
+    {
         return query(node->leftChild, val);
     }
 }
 
-template<typename T, typename Comp>
-BSTree<T, Comp>::Node *BSTree<T, Comp>::remove(Node *node, const T &val) {
-    if (node == nullptr) {
+template <typename T, typename Comp>
+BSTree<T, Comp>::Node* BSTree<T, Comp>::remove(Node* node, const T& val)
+{
+    if (node == nullptr)
+    {
         return nullptr;
     }
-    //ÕÒµ½ÁË
-    if (node->data_ == val) {
-        if (node->leftChild != nullptr && node->rightChild != nullptr) {
-            //Çé¿öÈı£ºÓĞÁ½¸öº¢×Ó
-            //½â¾ö·½·¨£ºÕÒÇ°Çı½Úµã
-            Node *pre = node->leftChild;
-            while (pre->rightChild != nullptr) {
+    //æ‰¾åˆ°äº†
+    if (node->data_ == val)
+    {
+        if (node->leftChild != nullptr && node->rightChild != nullptr)
+        {
+            //æƒ…å†µä¸‰ï¼šæœ‰ä¸¤ä¸ªå­©å­
+            //è§£å†³æ–¹æ³•ï¼šæ‰¾å‰é©±èŠ‚ç‚¹
+            Node* pre = node->leftChild;
+            while (pre->rightChild != nullptr)
+            {
                 pre = pre->rightChild;
             }
             node->data_ = pre->data_;
-            //×¢Òâ ´ËÊ±Ô­À´µÄvalÖµÒÑ¾­±»¸²¸Ç ÄãĞèÒªÉ¾³ıµÄÊÇÇ°Çı½Úµã ËùÒÔÒªËÑË÷Ç°Çı½ÚµãµÄÖµ
+            //æ³¨æ„ æ­¤æ—¶åŸæ¥çš„valå€¼å·²ç»è¢«è¦†ç›– ä½ éœ€è¦åˆ é™¤çš„æ˜¯å‰é©±èŠ‚ç‚¹ æ‰€ä»¥è¦æœç´¢å‰é©±èŠ‚ç‚¹çš„å€¼
             node->leftChild = remove(node->leftChild, pre->data_);
-        } else if (node->leftChild != nullptr) {
-            Node *temp = node->leftChild;
+        }
+        else if (node->leftChild != nullptr)
+        {
+            Node* temp = node->leftChild;
             delete node;
             return temp;
-        } else if (node->rightChild != nullptr) {
-            Node *temp = node->rightChild;
+        }
+        else if (node->rightChild != nullptr)
+        {
+            Node* temp = node->rightChild;
             delete node;
             return temp;
-        } else {
+        }
+        else
+        {
             delete node;
-            //ÎŞ×Ó½Úµã
+            //æ— å­èŠ‚ç‚¹
             return nullptr;
         }
-    } else if (comp_(node->data_, val)) {
+    }
+    else if (comp_(node->data_, val))
+    {
         node->rightChild = remove(node->rightChild, val);
-    } else {
+    }
+    else
+    {
         node->leftChild = remove(node->leftChild, val);
     }
     return node;
 }
-/*Çø¼äÄÚ²éÕÒÔªËØ
- *Ë¼Â·£ºÊ¹ÓÃµÄÖĞĞò±éÀúµÄµİ¹éË¼Â·
- *µ±ÔªËØµÄÖµĞ¡ÓÚ×ó±ß½çÊ± ²»ÔÚ±éÀú×ó×ÓÊ÷ ÓÒ±ßÍ¬Àí ¿ÉÒÔÔö¼ÓĞ§ÂÊ
+
+/*åŒºé—´å†…æŸ¥æ‰¾å…ƒç´ 
+ *æ€è·¯ï¼šä½¿ç”¨çš„ä¸­åºéå†çš„é€’å½’æ€è·¯
+ *å½“å…ƒç´ çš„å€¼å°äºå·¦è¾¹ç•Œæ—¶ ä¸åœ¨éå†å·¦å­æ ‘ å³è¾¹åŒç† å¯ä»¥å¢åŠ æ•ˆç‡
  */
-template<typename T, typename Comp>
-void BSTree<T, Comp>::findValues(Node *node, vector<T> &vec, int left, int right) {
-    if (node != nullptr) {
-        if (node->data_ > left) {
+template <typename T, typename Comp>
+void BSTree<T, Comp>::findValues(Node* node, vector<T>& vec, int left, int right)
+{
+    if (node != nullptr)
+    {
+        if (node->data_ > left)
+        {
             findValues(node->leftChild, vec, left, right);
         }
-        if (node->data_ >= left && node->data_ <= right) {
+        if (node->data_ >= left && node->data_ <= right)
+        {
             vec.push_back(node->data_);
         }
-        if (node->data_ < right) {
+        if (node->data_ < right)
+        {
             findValues(node->rightChild, vec, left, right);
         }
     }
 }
-/*Í¨¹ıÖĞĞò±éÀúÊµÏÖÅĞ¶ÏÊÇ·ñÎªBSTÊ÷
- *Ê×ÏÈ BSTÊ÷ÓĞÒÔÏÂĞÔÖÊ ÕûÌå£º×ó×ÓÊ÷µÄËùÓĞÖµ¶¼ÒªĞ¡ÓÚ¸ù½Úµã ÓÒ×ÓÊ÷µÄËùÓĞÖµ¶¼Òª´óÓÚ¸ù½Úµã
- *                  ¾Ö²¿£º×ó×Ó½Úµã<µ±Ç°½Úµã<ÓÒ×Ó½Úµã
- *±¾º¯ÊıÍ¨¹ıBSTÖĞĞò±éÀúĞòÁĞÉıĞòµÄÌØµã µ±·¢ÏÖÈç¹û²»ÊÇÉıĞòµÄ»° ËµÃ÷²»ÊÇBSTÊ÷ ·µ»Øfalse
- *preÖ¸ÏòÖĞĞò±éÀúÖĞÇ°Ò»¸ö½ÚµãµÄÖµ ±¾º¯Êı½«µ±Ç°½ÚµãµÄÖµºÍÇ°Ò»¸ö½ÚµãµÄÖµ½øĞĞ±È½Ï
+
+/*é€šè¿‡ä¸­åºéå†å®ç°åˆ¤æ–­æ˜¯å¦ä¸ºBSTæ ‘
+ *é¦–å…ˆ BSTæ ‘æœ‰ä»¥ä¸‹æ€§è´¨ æ•´ä½“ï¼šå·¦å­æ ‘çš„æ‰€æœ‰å€¼éƒ½è¦å°äºæ ¹èŠ‚ç‚¹ å³å­æ ‘çš„æ‰€æœ‰å€¼éƒ½è¦å¤§äºæ ¹èŠ‚ç‚¹
+ *                  å±€éƒ¨ï¼šå·¦å­èŠ‚ç‚¹<å½“å‰èŠ‚ç‚¹<å³å­èŠ‚ç‚¹
+ *æœ¬å‡½æ•°é€šè¿‡BSTä¸­åºéå†åºåˆ—å‡åºçš„ç‰¹ç‚¹ å½“å‘ç°å¦‚æœä¸æ˜¯å‡åºçš„è¯ è¯´æ˜ä¸æ˜¯BSTæ ‘ è¿”å›false
+ *preæŒ‡å‘ä¸­åºéå†ä¸­å‰ä¸€ä¸ªèŠ‚ç‚¹çš„å€¼ æœ¬å‡½æ•°å°†å½“å‰èŠ‚ç‚¹çš„å€¼å’Œå‰ä¸€ä¸ªèŠ‚ç‚¹çš„å€¼è¿›è¡Œæ¯”è¾ƒ
  */
-template<typename T, typename Comp>
-bool BSTree<T, Comp>::isBSTree(Node *node, Node *pre) {
+template <typename T, typename Comp>
+bool BSTree<T, Comp>::isBSTree(Node* node, Node* pre)
+{
     ;
 }
 
-int main(void) {
+int main(void)
+{
     BSTree<int> test1;
     int arr[] = {5, 4, 6, 2, 6, 7, 4, 99};
-    for (auto i: arr) {
+    for (auto i : arr)
+    {
         test1.n_insert(i);
     }
     // cout << test1.n_query(7);
@@ -543,10 +671,11 @@ int main(void) {
     // cout << test1.n_query(66);
     // cout << test1.n_query(99);
 
-    //²âÊÔÇ°ÖĞºóĞò±éÀúÎÊÌâ
+    //æµ‹è¯•å‰ä¸­ååºéå†é—®é¢˜
     BSTree<int> test2;
     int arrr[] = {58, 24, 0, 5, 34, 41, 67, 62, 64, 69, 78};
-    for (auto i: arrr) {
+    for (auto i : arrr)
+    {
         //test2.n_insert(i);
         test2.insert(i);
     }
@@ -563,7 +692,8 @@ int main(void) {
     cout << test2.query(69);
     vector<int> vec1;
     test2.findValues(vec1, 20, 40);
-    for (auto it: vec1) {
+    for (auto it : vec1)
+    {
         cout << it << " ";
     }
     cout << endl;
