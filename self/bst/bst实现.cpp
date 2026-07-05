@@ -20,6 +20,10 @@ template <typename T, typename Comp = less<T>>
 
 class BSTree
 {
+    //友元测试函数
+public:
+    friend void test01();
+
 private:
     struct Node
     {
@@ -295,7 +299,7 @@ public:
     bool isBSTree(void)
     {
         Node* pre = nullptr;
-        isBSTree(root_, pre);
+        return isBSTree(root_, pre);
     }
 
 private
@@ -654,7 +658,48 @@ void BSTree<T, Comp>::findValues(Node* node, vector<T>& vec, int left, int right
 template <typename T, typename Comp>
 bool BSTree<T, Comp>::isBSTree(Node* node, Node* pre)
 {
-    ;
+    if (node == nullptr)
+    {
+        return true;
+    }
+    //L
+    if (!isBSTree(node->leftChild, pre))
+    {
+        return false;
+    }
+    //V
+    if (pre != nullptr)
+    {
+        if (comp_(node->data_, pre->data_))
+        {
+            return false;
+        }
+    }
+    pre = node;
+    //R
+    if (!isBSTree(node->rightChild, pre))
+    {
+        return false;
+    }
+    return true;
+}
+
+void test01() // 测试是否是BST树
+{
+    using Node = BSTree<int>::Node;
+    BSTree<int> bst;
+    bst.root_ = new Node(40);
+    Node* node1 = new Node(20);
+    Node* node2 = new Node(60);
+    Node* node3 = new Node(30);
+    Node* node4 = new Node(80);
+
+    bst.root_->leftChild = node1;
+    bst.root_->rightChild = node2;
+    node2->leftChild = node3;
+    node2->rightChild = node4;
+
+    cout << bst.isBSTree() << endl;
 }
 
 int main(void)
@@ -697,7 +742,9 @@ int main(void)
         cout << it << " ";
     }
     cout << endl;
-
+    //是否为BST树测试
+    cout << test1.isBSTree();
+    test01();
     return 0;
 }
 
