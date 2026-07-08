@@ -23,6 +23,7 @@ class BSTree
     //友元测试函数
 public:
     friend void test01();
+    friend void test02();
 
 private:
     struct Node
@@ -302,6 +303,32 @@ public:
         return isBSTree(root_, pre);
     }
 
+    //判断是否为子树
+    /*思路：首先找到子树root节点在大树中是否存在，然后再进行遍历
+     */
+    bool isChildTree(BSTree<T, Comp>& child)
+    {
+        //首先寻找子树的root在大树中是否存在 在哪个位置
+        Node* cur = root_;
+        while (cur != nullptr && cur->data_ != child.root_->data_)
+        {
+            if (comp_(cur->data_, child.root_->data_))
+            {
+                cur = cur->rightChild;
+            }
+            else if (comp_(child.root_->data_, cur->data_))
+            {
+                cur = cur->leftChild;
+            }
+        }
+        if (cur == nullptr)
+        {
+            return false;
+        }
+        //递归遍历
+        return isChildTree_SubtreeRecursive(cur, child.root_);
+    }
+
 private
 :
     //递归实现 此处本质为深度优先搜索
@@ -319,6 +346,7 @@ private
     //查找区间内的值
     void findValues(Node* node, vector<T>& vec, int left, int right);
     bool isBSTree(Node* node, Node* pre);
+    bool isChildTree_SubtreeRecursive(Node* father, Node* child);
 };
 
 /*
@@ -684,6 +712,36 @@ bool BSTree<T, Comp>::isBSTree(Node* node, Node* pre)
     return true;
 }
 
+template <typename T, typename Comp>
+bool BSTree<T, Comp>::isChildTree_SubtreeRecursive(Node* father, Node* child)
+{
+    //判断递归出口条件
+    //完全符合
+    if (father == nullptr && child == nullptr)
+    {
+        return true;
+    }
+    //大树中不存在
+    if (father == nullptr)
+    {
+        return false;
+    }
+    if (child == nullptr)
+    {
+        return true;
+    }
+    //判断
+    if (father->data_ == child->data_)
+    {
+        return isChildTree_SubtreeRecursive(father->leftChild, child->leftChild)
+            && isChildTree_SubtreeRecursive(father->rightChild, child->rightChild);
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void test01() // 测试是否是BST树
 {
     using Node = BSTree<int>::Node;
@@ -700,6 +758,28 @@ void test01() // 测试是否是BST树
     node2->rightChild = node4;
 
     cout << bst.isBSTree() << endl;
+}
+
+void test02() // 测试子树判断问题
+{
+    int ar[] = {58, 24, 67, 0, 34, 62, 69, 5, 41, 64, 78};
+    BSTree<int> bst;
+    for (int v : ar)
+    {
+        bst.insert(v);
+    }
+
+    using Node = BSTree<int>::Node;
+    BSTree<int> bst1;
+    bst1.root_ = new Node(67);
+    Node* node1 = new Node(62);
+    Node* node2 = new Node(69);
+    Node* node3 = new Node(60);
+    bst1.root_->leftChild = node1;
+    bst1.root_->rightChild = node2;
+    node1->leftChild = node3;
+
+    cout << bst.isChildTree(bst1) << endl;
 }
 
 int main(void)
@@ -745,6 +825,7 @@ int main(void)
     //是否为BST树测试
     cout << test1.isBSTree();
     test01();
+    test02();
     return 0;
 }
 
