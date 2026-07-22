@@ -278,6 +278,10 @@ public:
     }
     //最近公共祖先节点实现
     Node *getLCA(int val1, int val2);
+    //根据前序遍历和中序遍历重建BST树
+    void rebuildBST(int pre[], int i, int j, int in[], int m, int n) {
+        root_ = rebuildBSTprivate(pre, i, j, in, m, n);
+    }
 
 private
 :
@@ -297,6 +301,7 @@ private
     void findValues(Node *node, vector<T> &vec, int left, int right);
     bool isBSTree(Node *node, Node *pre);
     bool isChildTree_SubtreeRecursive(Node *father, Node *child);
+    Node *rebuildBSTprivate(int pre[], int i, int j, int in[], int m, int n);
 };
 
 //最近公共祖先节点实现
@@ -633,6 +638,32 @@ bool BSTree<T, Comp>::isChildTree_SubtreeRecursive(Node *father, Node *child) {
         return false;
     }
 }
+template<typename T, typename Comp>
+BSTree<T, Comp>::Node *BSTree<T, Comp>::rebuildBSTprivate(int pre[], int i, int j, int in[], int m, int n) {
+    // 前序遍历数组及当前处理区间 [i, j]
+    // 中序遍历数组及当前处理区间 [m, n]
+    if (i > j || m > n) {
+        return nullptr;
+    }
+    // 前序遍历区间的第一个元素一定是当前子树的根节点
+    Node *node = new Node(pre[i]);
+    // 在中序遍历中查找根节点的位置
+    // 根节点左侧的元素属于左子树，右侧的元素属于右子树
+    int k = m;
+    for (; k <= n && in[k] != pre[i]; k++);
+    // 找到根节点在中序遍历中的位置
+    if (in[k] == pre[i]) {
+        // 左子树节点数量为 k - m
+        // 前序遍历中左子树对应区间为 [i + 1, i + (k - m)]
+        // 中序遍历中左子树对应区间为 [m, k - 1]
+        node->leftChild = rebuildBSTprivate(pre, i + 1, k - m + i, in, m, k - 1);
+        // 前序遍历中右子树对应区间为 [i + (k - m) + 1, j]
+        // 中序遍历中右子树对应区间为 [k + 1, n]
+        node->rightChild = rebuildBSTprivate(pre, k - m + i + 1, j, in, k + 1, n);
+        return node;
+    }
+    return node;
+}
 
 void test01() // 测试是否是BST树
 {
@@ -671,6 +702,16 @@ void test02() // 测试子树判断问题
     node1->leftChild = node3;
 
     cout << bst.isChildTree(bst1) << endl;
+}
+void test05() // 测试重建二叉树
+{
+    BSTree<int> bst;
+    int pre[] = {58, 24, 0, 5, 34, 41, 67, 62, 64, 69, 78};
+    int in[] = {0, 5, 24, 34, 41, 58, 62, 64, 67, 69, 78};
+    bst.rebuildBST(pre, 0, 10, in, 0, 10);
+    bst.preOrder();
+    bst.inOrder();
+    cout << bst.isBSTree();
 }
 
 int main(void) {
@@ -718,6 +759,8 @@ int main(void) {
     test01();
     test02();
     cout << test2.getLCA(78, 62)->data_;
+    cout << endl;
+    test05();
     return 0;
 }
 
