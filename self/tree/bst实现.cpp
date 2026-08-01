@@ -9,10 +9,16 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include <algorithm>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
+//下面的放在main里
+// #ifdef _WIN32
+// SetConsoleOutputCP(CP_UTF8); // 设置控制台输出为 UTF-8
+// SetConsoleCP(CP_UTF8); // 设置控制台输入为 UTF-8
+// #endif
 
 /*  层序遍历和深度遍历 使用栈
  *  广度遍历 使用队列
@@ -282,6 +288,12 @@ public:
     void rebuildBST(int pre[], int i, int j, int in[], int m, int n) {
         root_ = rebuildBSTprivate(pre, i, j, in, m, n);
     }
+    //判断是否为平衡树（左右子树高度差不超过1（<=1））
+    bool isBalance(void) {
+        bool flag = true;
+        isBalance(root_, 1, flag);
+        return flag;
+    }
 
 private
 :
@@ -302,6 +314,7 @@ private
     bool isBSTree(Node *node, Node *pre);
     bool isChildTree_SubtreeRecursive(Node *father, Node *child);
     Node *rebuildBSTprivate(int pre[], int i, int j, int in[], int m, int n);
+    int isBalance(Node *node, int level, bool &flag);
 };
 
 //最近公共祖先节点实现
@@ -664,7 +677,27 @@ BSTree<T, Comp>::Node *BSTree<T, Comp>::rebuildBSTprivate(int pre[], int i, int 
     }
     return node;
 }
-
+//判断是否为平衡树
+/*思路：使用递归 私有函数返回层数 然后根据层数判断是否平衡 然后在回溯的时候进行判断
+ */
+template<typename T, typename Comp>
+int BSTree<T, Comp>::isBalance(Node *node, int level, bool &flag) {
+    if (node == nullptr) {
+        return level;
+    }
+    int left = isBalance(node->leftChild, level + 1, flag);
+    if (!flag) {
+        return left;
+    }
+    int right = isBalance(node->rightChild, level + 1, flag);
+    if (!flag) {
+        return right;
+    }
+    if (abs(left - right) > 1) {
+        flag = false;
+    }
+    return max(left, right);
+}
 void test01() // 测试是否是BST树
 {
     using Node = BSTree<int>::Node;
@@ -761,6 +794,11 @@ int main(void) {
     cout << test2.getLCA(78, 62)->data_;
     cout << endl;
     test05();
+    cout << test2.isBalance();
+    //使得test2失衡
+    test2.insert(12);
+    test2.insert(13);
+    cout << test2.isBalance();
     return 0;
 }
 
