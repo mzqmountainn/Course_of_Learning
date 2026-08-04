@@ -36,4 +36,5 @@ add_executable(self #双指针实现字符串反向.cpp
         #bigData/快排分割解决topK问题.cpp
         #tree/bst实现.cpp
         tree/avl.cpp
+        tree/rbtree.cpp
 )
