@@ -52,6 +52,7 @@ private:
     Node* left(Node* node) { return node->leftChild_; }
     Node* right(Node* node) { return node->rightChild_; }
     void destroy(Node* node);
+    void fixAfterRemove(Node* node);
 
 public:
     RBtree(void) : root_()
@@ -59,6 +60,7 @@ public:
     };
     ~RBtree();
     void insert(const T& val);
+    void remove(const T& val);
 };
 
 template <typename T>
@@ -272,6 +274,190 @@ void RBtree<T>::destroy(Node* node)
     delete node;
 }
 
+template <typename T>
+void RBtree<T>::fixAfterRemove(Node* node)
+{
+    while (node != root_ && getColor(node) == BLACK)
+    {
+        if (node->parent_->leftChild_ == node)
+        {
+            //左子树情况
+            Node* brother = node->parent_->rightChild_;
+
+
+            if (getColor(brother) == RED)
+            {
+                //情况4
+                node->parent_->color_ = RED;
+                brother->color_ = BLACK;
+                leftRotate(node->parent_);
+                brother = node->parent_->rightChild_;
+            }
+            if (getColor(brother->leftChild_) == BLACK && getColor(brother->rightChild_) == BLACK)
+            {
+                ///情况3
+                brother->color_ = RED;
+                node = node->parent_;
+            }
+            else
+            {
+                if (getColor(brother->rightChild_) == BLACK)
+                {
+                    //情况2
+                    brother->color_ = RED;
+                    brother->leftChild_->color_ = BLACK;
+                    rightRotate(brother);
+                    brother = node->parent_->rightChild_;
+                }
+                //情况1
+                brother->color_ = node->parent_->color_;
+                node->parent_->color_ = BLACK;
+                brother->rightChild_->color_ = BLACK;
+                leftRotate(node->parent_);
+                break;
+            }
+        }
+        else
+        {
+            //左子树情况
+            Node* brother = node->parent_->leftChild_;
+            if (getColor(brother) == RED)
+            {
+                //情况4
+                node->parent_->color_ = RED;
+                brother->color_ = BLACK;
+                rightRotate(node->parent_);
+                brother = node->parent_->leftChild_;
+            }
+            if (getColor(brother->rightChild_) == BLACK && getColor(brother->leftChild_) == BLACK)
+            {
+                ///情况3
+                brother->color_ = RED;
+                node = node->parent_;
+            }
+            else
+            {
+                if (getColor(brother->leftChild_) == BLACK)
+                {
+                    //情况2
+                    brother->color_ = RED;
+                    brother->rightChild_->color_ = BLACK;
+                    leftRotate(brother);
+                    brother = node->parent_->leftChild_;
+                }
+                //情况1
+                brother->color_ = node->parent_->color_;
+                node->parent_->color_ = BLACK;
+                brother->leftChild_->color_ = BLACK;
+                rightRotate(node->parent_);
+                break;
+            }
+        }
+    }
+    node->color_ = BLACK;
+}
+
+
+template <typename T>
+void RBtree<T>::remove(const T& val)
+{
+    Node* node = root_;
+    while (node != nullptr)
+    {
+        if (val > node->data_)
+        {
+            node = node->rightChild_;
+        }
+        else if (val < node->data_)
+        {
+            node = node->leftChild_;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (node == nullptr)
+        return;
+    //bst删除 三种情况 首先判断情况三：有两个孩子
+    if (node->leftChild_ != nullptr && node->rightChild_ != nullptr)
+    {
+        Node* cur = node->leftChild_;
+        while (cur->rightChild_ != nullptr)
+        {
+            cur = cur->rightChild_;
+        }
+        node->data_ = cur->data_;
+        node = cur;
+    }
+    Node* child = node->leftChild_;
+    if (child == nullptr)
+    {
+        child = node->rightChild_;
+    }
+    if (child != nullptr)
+    {
+        if (node->parent_ == nullptr)
+        {
+            delete node;
+            root_ = child;
+            child->parent_ = nullptr;
+            child->color_ = BLACK;
+            return;
+        }
+        //有一个孩子
+
+        child->parent_ = node->parent_;
+        if (node->parent_->leftChild_ == node)
+        {
+            node->parent_->leftChild_ = child;
+        }
+        else
+        {
+            node->parent_->rightChild_ = child;
+        }
+        color nodeColor = node->color_;
+        delete node;
+        //孩子是红色 直接涂黑
+        if (nodeColor == BLACK)
+        {
+            //孩子是黑色 需要进一步调整
+            if (getColor(child) == BLACK)
+            {
+                fixAfterRemove(child);
+            }
+            else
+            {
+                child->color_ = BLACK;
+            }
+        }
+    }
+    else
+    {
+        if (node->parent_ == nullptr)
+        {
+            delete node;
+            root_ = nullptr;
+            return;
+        }
+
+        if (getColor(node) == BLACK)
+        {
+            fixAfterRemove(node);
+        }
+        if (node->parent_->leftChild_ == node)
+        {
+            node->parent_->leftChild_ = nullptr;
+        }
+        else
+        {
+            node->parent_->rightChild_ = nullptr;
+        }
+        delete node;
+        //没有孩子
+    }
+}
+
 int main(void)
 {
 #ifdef _WIN32
@@ -284,6 +470,11 @@ int main(void)
     for (auto it : arr)
     {
         test1.insert(it);;
+    }
+    test1.remove(1);
+    for (auto it : arr)
+    {
+        test1.remove(it);
     }
 
 
