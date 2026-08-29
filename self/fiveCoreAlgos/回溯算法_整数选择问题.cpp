@@ -4,6 +4,7 @@
 //整数选择问题：给定一组整数，从里面挑选出一组整数，让选择的整数的和，和剩下的整数的和的差最小
 #include <iostream>
 #include <cmath>
+#include <cstdint>
 #include <vector>
 
 int arr[] = {
@@ -19,22 +20,16 @@ int MinSum = INT32_MAX;
 //未被选择数字之和
 int r = 0;
 
-void func(int i)
-{
-    if (i == length)
-    {
+void func(int i) {
+    if (i == length) {
         int result = abs(sum - r);
-        if (result < MinSum)
-        {
+        if (result < MinSum) {
             MinSum = result;
-            for (int i = 0; i < length; ++i)
-            {
+            for (int i = 0; i < length; ++i) {
                 xBest[i] = x[i];
             }
         }
-    }
-    else
-    {
+    } else {
         x[i] += 1;
         sum += arr[i];
         r -= arr[i];
@@ -47,17 +42,13 @@ void func(int i)
     }
 }
 
-int main(void)
-{
-    for (int it : arr)
-    {
+int main(void) {
+    for (int it: arr) {
         r += it;
     }
     func(0);
-    for (int i = 0; i < length; ++i)
-    {
-        if (xBest[i] == 1)
-        {
+    for (int i = 0; i < length; ++i) {
+        if (xBest[i] == 1) {
             std::cout << arr[i] << " ";
         }
     }
