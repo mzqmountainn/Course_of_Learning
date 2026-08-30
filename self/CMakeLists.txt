@@ -39,5 +39,8 @@ add_executable(self #双指针实现字符串反向.cpp
         #tree/rbtree.cpp
         #fiveCoreAlgos/回溯算法_整数选择问题.cpp
         #fiveCoreAlgos/回溯算法_2N整数选择问题.cpp
-        fiveCoreAlgos/回溯算法_挑选数字.cpp
+        #fiveCoreAlgos/回溯算法_挑选数字.cpp
+        #fiveCoreAlgos/回溯算法_解空间之排列树.cpp
+        fiveCoreAlgos/回溯算法_八皇后问题.cpp
+        fiveCoreAlgos/分治算法_二分搜索.cpp
 )
