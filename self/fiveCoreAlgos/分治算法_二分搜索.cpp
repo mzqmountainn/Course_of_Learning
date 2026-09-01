@@ -11,7 +11,18 @@ int arr[] = {0, 3, 6, 9, 15, 25, 36, 47, 58, 79, 88, 99, 101};
 const int length = sizeof(arr) / sizeof(arr[0]);
 bool binarySearch(int target, int arr[], int i, int j) {
     int mid = (i + j) / 2;
+    if (i >= j) {
+        return false;
+    }
+    if (arr[mid] == target) {
+        return true;
+    } else if (arr[mid] > target) {
+        return binarySearch(target, arr, i, mid - 1);
+    } else {
+        return binarySearch(target, arr, mid, j);
+    }
 }
 int main(void) {
+    cout << binarySearch(98, arr, 0, length - 1);
     return 0;
 }
