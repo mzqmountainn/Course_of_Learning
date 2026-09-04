@@ -45,5 +45,7 @@ add_executable(self #双指针实现字符串反向.cpp
         #fiveCoreAlgos/回溯算法_八皇后问题.cpp
         #fiveCoreAlgos/分治算法_二分搜索.cpp
         #fiveCoreAlgos/分治算法_快速排序.cpp
-        fiveCoreAlgos/动态规划算法_硬币选择问题.cpp
+        #fiveCoreAlgos/动态规划算法_硬币选择问题.cpp
+        #fiveCoreAlgos/动态规划算法_最大字段和.cpp
+        fiveCoreAlgos/动态规划算法_最长非降子序列.cpp
 )
