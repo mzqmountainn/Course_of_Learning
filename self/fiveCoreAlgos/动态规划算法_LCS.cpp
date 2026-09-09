@@ -29,6 +29,7 @@ dp[n][m] : n表示第一个串的长度   m表示第二个串的长度，n行m�
 */
 //递归解法
 
+#if ture
 string str1 = "helloworld";
 string str2 = "hwelloworld";
 int** dp = nullptr;
@@ -77,4 +78,109 @@ int main(void)
 
    return 0;
 }
+#else
+string str1 = "helloworld";
+string str2 = "hwelloworld";
+int** dp = nullptr;
+int** path = nullptr;
+
+//非递归解法
+//传入的是下标
+int LCS(string X, int n, string Y, int m)
+{
+   for (int i = 1; i <= n + 1; ++i)
+   {
+      for (int j = 1; j <= m + 1; ++j)
+      {
+         if (X[i - 1] == Y[j - 1])
+         {
+            dp[i][j] = 1 + dp[i - 1][j - 1];
+            path[i][j] = 1;
+         }
+         else
+         {
+            int len1 = dp[i - 1][j];
+            int len2 = dp[i][j - 1];
+            if (len1 > len2)
+            {
+               dp[i][j] = len1;
+               path[i][j] = 3;
+            }
+            else
+            {
+               dp[i][j] = len2;
+               path[i][j] = 2;
+            }
+         }
+      }
+   }
+   return dp[n + 1][m + 1];
+}
+
+void backStrace(string str1, int n, int m)
+{
+   if (n <= 0 || m <= 0)
+   {
+      return;
+   }
+
+   if (path[n][m] == 1)
+   {
+      // 对应位置的元素是相等的
+      backStrace(str1, n - 1, m - 1); // 向对角线递归
+      cout << str1[n - 1];
+   }
+   else
+   {
+      if (path[n][m] == 2)
+      {
+         backStrace(str1, n, m - 1); // 向左递归
+      }
+      else
+      {
+         // path[n][m] = 3
+         backStrace(str1, n - 1, m); // 向上递归
+      }
+   }
+}
+
+int main(void)
+{
+   // dp是一个n行m列的二维数组
+   int n = str1.size();
+   int m = str2.size();
+   dp = new int*[n + 1]; // n行
+   for (int i = 0; i < n + 1; ++i)
+   {
+      dp[i] = new int[m + 1]; // m列
+      for (int j = 0; j < m + 1; ++j)
+      {
+         // dp[i][j] = -1;
+         dp[i][j] = 0;
+      }
+   }
+   path = new int*[n + 1]; // n行
+   for (int i = 0; i < n + 1; ++i)
+   {
+      path[i] = new int[m + 1](); // m列
+   }
+   //传入的是下标
+   int size = LCS(str1, n - 1, str2, m - 1);
+   cout << "LCS length:" << size << endl;
+
+   // backStrace(str1, n-1, m-1);
+   backStrace(str1, n, m);
+
+   //for (int i = 0; i < n; ++i) {   // 行
+   //	for (int j = 0; j < m; ++j) { // 列
+   //		cout << path[i][j] << " ";
+   //	}
+   //	cout << endl;
+   //}
+
+   // 释放dp数组内存
+   return 0;
+   return 0;
+}
+#endif
 
