@@ -50,5 +50,6 @@ add_executable(self #双指针实现字符串反向.cpp
         #fiveCoreAlgos/动态规划算法_最长非降子序列.cpp
         #fiveCoreAlgos/动态规划算法_LCS.cpp
         #fiveCoreAlgos/动态规划算法_01背包问题.cpp
-        fiveCoreAlgos/动态规划算法_三角数组求和.cpp
+        #fiveCoreAlgos/动态规划算法_三角数组求和.cpp
+        fiveCoreAlgos/贪心算法_硬币选择问题.cpp
 )
