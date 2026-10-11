@@ -57,5 +57,6 @@ add_executable(self #双指针实现字符串反向.cpp
         #fiveCoreAlgos/分支限界算法_01背包.cpp
         #"fiveCoreAlgos/分支限界算法_01背包(Priority).cpp"
         #stringOperation/BF朴素算法.cpp
-        stringOperation/KMP算法.cpp
+        #stringOperation/KMP算法.cpp
+        stringOperation/Trie树.cpp
 )
