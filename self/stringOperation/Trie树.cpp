@@ -5,81 +5,140 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
-class TrieTree {
+class TrieTree
+{
 public:
-    TrieTree() {
+    TrieTree()
+    {
         root_ = new trieNode('\0', 0);
     };
 
-    struct trieNode {
-        trieNode(char data, int fre) : data_(data), frequency_(fre) {
+    ~TrieTree()
+    {
+        queue<trieNode*> nodeQueue;
+        nodeQueue.push(root_);
+        while (!nodeQueue.empty())
+        {
+            trieNode* cur = nodeQueue.front();
+            nodeQueue.pop();
+            for (auto it : cur->nodeMap)
+            {
+                nodeQueue.push(it.second);
+            }
+            delete cur;
+        }
+    }
+
+    struct trieNode
+    {
+        trieNode(char data, int fre) : data_(data), frequency_(fre)
+        {
         };
         char data_;
         int frequency_;
-        map<char, trieNode *> nodeMap;
+        map<char, trieNode*> nodeMap;
     };
 
-    void add(const string &word);
-    int query(const string &word);
+    void add(const string& word);
+    int query(const string& word);
     void preOrder();
+    vector<string> queryPrefix(string prefix);
 
 private:
-    trieNode *root_;
-    void preOrder(trieNode *cur, string word, vector<string> &wordLists);
+    trieNode* root_;
+    void preOrder(trieNode* cur, string word, vector<string>& wordLists);
 };
 
-void TrieTree::preOrder() {
+void TrieTree::preOrder()
+{
     vector<string> wordList;
     string word;
     preOrder(root_, word, wordList);
-    for (auto it: wordList) {
+    for (auto it : wordList)
+    {
         cout << it << endl;
     }
 }
-void TrieTree::preOrder(trieNode *cur, string word, vector<string> &wordLists) {
-    if (cur != root_) {
+
+vector<string> TrieTree::queryPrefix(string prefix)
+{
+    trieNode* cur = root_;
+    for (int i = 0; i < prefix.size(); ++i)
+    {
+        auto it = cur->nodeMap.find(prefix[i]);
+        if (it == cur->nodeMap.end())
+        {
+            return {};
+        }
+        cur = it->second;
+    }
+    vector<string> wordLists;
+    preOrder(cur, prefix.substr(0, prefix.size() - 1), wordLists);
+    return wordLists;
+}
+
+
+void TrieTree::preOrder(trieNode* cur, string word, vector<string>& wordLists)
+{
+    if (cur != root_)
+    {
         word += cur->data_;
     }
-    if (cur->frequency_ != 0) {
+    if (cur->frequency_ != 0)
+    {
         wordLists.emplace_back(word);
     }
-    for (auto it: cur->nodeMap) {
+    for (auto it : cur->nodeMap)
+    {
         preOrder(it.second, word, wordLists);
     }
 }
 
-void TrieTree::add(const string &word) {
-    trieNode *cur = root_;
-    for (int i = 0; i < word.size(); ++i) {
+void TrieTree::add(const string& word)
+{
+    trieNode* cur = root_;
+    for (int i = 0; i < word.size(); ++i)
+    {
         auto it = cur->nodeMap.find(word[i]);
-        if (it == cur->nodeMap.end()) {
+        if (it == cur->nodeMap.end())
+        {
             auto newNode = new trieNode(word[i], 0);
             cur->nodeMap.emplace(word[i], newNode);
             cur = newNode;
-        } else {
+        }
+        else
+        {
             cur = it->second;
         }
     }
     cur->frequency_++;
     return;
 }
-int TrieTree::query(const string &word) {
-    trieNode *cur = root_;
-    for (int i = 0; i < word.size(); ++i) {
+
+int TrieTree::query(const string& word)
+{
+    trieNode* cur = root_;
+    for (int i = 0; i < word.size(); ++i)
+    {
         auto it = cur->nodeMap.find(word[i]);
-        if (it == cur->nodeMap.end()) {
+        if (it == cur->nodeMap.end())
+        {
             return 0;
-        } else {
+        }
+        else
+        {
             cur = it->second;
         }
     }
     return cur->frequency_;
 }
 
-int main(void) {
+int main(void)
+{
     TrieTree tree;
     tree.add("nice");
     tree.add("nicee");
@@ -89,7 +148,12 @@ int main(void) {
     tree.add("npp");
     tree.add("npp");
     tree.add("npp");
+    tree.add("nip");
     cout << tree.query("nicee") << endl;
     tree.preOrder();
+    for (auto it : tree.queryPrefix("n"))
+    {
+        cout << it << " ";
+    }
     return 0;
 }
