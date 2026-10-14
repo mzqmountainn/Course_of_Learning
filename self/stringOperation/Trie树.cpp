@@ -47,6 +47,7 @@ public:
     int query(const string& word);
     void preOrder();
     vector<string> queryPrefix(string prefix);
+    void remove(const string& word);
 
 private:
     trieNode* root_;
@@ -137,6 +138,51 @@ int TrieTree::query(const string& word)
     return cur->frequency_;
 }
 
+void TrieTree::remove(const string& word)
+{
+    trieNode* cur = root_;
+    trieNode* del = root_;
+    char delch = word[0];
+    for (int i = 0; i < word.size(); ++i)
+    {
+        auto it = cur->nodeMap.find(word[i]);
+        if (it == cur->nodeMap.end())
+        {
+            return;
+        }
+
+        if (cur->nodeMap.size() > 1 || cur->frequency_ > 0)
+        {
+            del = cur;
+            delch = word[i];
+        }
+        cur = it->second;
+    }
+    if (cur->nodeMap.empty())
+    {
+        trieNode* child = del->nodeMap[delch];
+        del->nodeMap.erase(delch);
+        queue<trieNode*> nodeQueue;
+        nodeQueue.push(child);
+        while (!nodeQueue.empty())
+        {
+            trieNode* front = nodeQueue.front();
+            nodeQueue.pop();
+            for (auto& it : front->nodeMap)
+            {
+                nodeQueue.push(it.second);
+            }
+
+            delete front;
+        }
+    }
+    else
+    {
+        cur->frequency_ = 0;
+    }
+}
+
+
 int main(void)
 {
     TrieTree tree;
@@ -149,9 +195,15 @@ int main(void)
     tree.add("npp");
     tree.add("npp");
     tree.add("nip");
+    tree.add("apple");
     cout << tree.query("nicee") << endl;
     tree.preOrder();
+    tree.remove("npp");
     for (auto it : tree.queryPrefix("n"))
+    {
+        cout << it << " ";
+    }
+    for (auto it : tree.queryPrefix("a"))
     {
         cout << it << " ";
     }
