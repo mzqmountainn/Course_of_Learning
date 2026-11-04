@@ -61,4 +61,5 @@ add_executable(self #双指针实现字符串反向.cpp
         #stringOperation/Trie树.cpp
         #stringOperation/跳跃表.cpp
         graph/图.cpp
+        tree/huffman.cpp
 )
