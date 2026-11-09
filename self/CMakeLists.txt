@@ -60,6 +60,7 @@ add_executable(self #双指针实现字符串反向.cpp
         #stringOperation/KMP算法.cpp
         #stringOperation/Trie树.cpp
         #stringOperation/跳跃表.cpp
-        graph/图.cpp
+        #graph/图.cpp
+        graph/Dijkstra.cpp
         #tree/huffman.cpp
 )
