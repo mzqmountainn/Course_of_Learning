@@ -61,6 +61,7 @@ add_executable(self #双指针实现字符串反向.cpp
         #stringOperation/Trie树.cpp
         #stringOperation/跳跃表.cpp
         #graph/图.cpp
-        graph/Dijkstra.cpp
+        #graph/Dijkstra.cpp
+        graph/floyd.cpp
         #tree/huffman.cpp
 )
