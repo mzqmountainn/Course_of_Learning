@@ -13,6 +13,7 @@
 using namespace std;
 const int SIZE = 9;
 int tree[SIZE];
+int height[SIZE];
 
 int find(int x) {
     while (x != tree[x]) {
@@ -23,12 +24,23 @@ int find(int x) {
 void merge(int x, int y) {
     x = find(x);
     y = find(y);
-    if (x != y) { tree[y] = x; }
+    if (x != y) {
+        if (height[x] > height[y]) {
+            tree[y] = x;
+        } else {
+            if (height[x] == height[y]) {
+                height[y]++;
+            }
+            tree[x] = y;
+        }
+        //tree[y] = x;
+    }
     return;
 }
 int main(void) {
     for (int i = 0; i < SIZE; ++i) {
         tree[i] = i;
+        height[i] = 1;
     }
     merge(1, 3);
     merge(1, 2);
