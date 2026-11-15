@@ -15,13 +15,36 @@ const int SIZE = 9;
 int tree[SIZE];
 int height[SIZE];
 
-int find(int x) {
-    while (x != tree[x]) {
+int find(int x)
+{
+    queue<int> que;
+    int pos = x;
+    que.push(x);
+    while (x != tree[x])
+    {
         x = tree[x];
+        que.push(x);
+    }
+    while (!que.empty())
+    {
+        tree[que.front()] = x;
+        que.pop();
     }
     return x;
 }
-void merge(int x, int y) {
+
+int find_recursion(int x)
+{
+    if (x == tree[x])
+    {
+        return x;
+    }
+    //find optimization
+    return tree[x] = find_recursion(tree[x]);
+}
+
+void merge(int x, int y)
+{
     x = find(x);
     y = find(y);
     if (x != y) {
@@ -37,8 +60,11 @@ void merge(int x, int y) {
     }
     return;
 }
-int main(void) {
-    for (int i = 0; i < SIZE; ++i) {
+
+int main(void)
+{
+    for (int i = 0; i < SIZE; ++i)
+    {
         tree[i] = i;
         height[i] = 1;
     }
@@ -49,5 +75,7 @@ int main(void) {
     merge(6, 8);
     merge(8, 7);
     cout << (find(2) == find(4) ? "OK" : "NO") << endl;
+    cout << (find_recursion(2) == find_recursion(4) ? "OK" : "NO") << endl;
+    return 0;
 }
 
