@@ -63,6 +63,8 @@ add_executable(self #双指针实现字符串反向.cpp
         #graph/图.cpp
         #graph/Dijkstra.cpp
         #graph/floyd.cpp
-        graph/UnionFind.cpp
+        #graph/UnionFind.cpp
+        #graph/kruskal.cpp
+        graph/prim.cpp
         #tree/huffman.cpp
 )
